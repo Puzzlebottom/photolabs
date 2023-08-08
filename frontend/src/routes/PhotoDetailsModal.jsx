@@ -4,7 +4,12 @@ import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
 
 const PhotoDetailsModal = (props) => {
-  const { selected, selectPhoto, closeModal } = props;
+  const { selected: { id, location, urls, user }, selectPhoto, closeModal } = props;
+  console.log('ID: ', id);
+  console.log('LOCATION: ', location);
+  console.log('URLS: ', urls);
+  console.log('USER: ', user);
+
 
   return (
     <div className="photo-details-modal">

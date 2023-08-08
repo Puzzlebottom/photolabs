@@ -4,7 +4,7 @@ import "../styles/PhotoList.scss";
 
 const PhotoList = (props) => {
   const photoList = props.photos.map((photo) => {
-    return <PhotoListItem key={photo.id} {...photo} />;
+    return <PhotoListItem key={photo.id} {...photo} selectPhoto={props.selectPhoto} />;
   });
 
   return (

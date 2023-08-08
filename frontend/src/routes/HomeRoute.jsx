@@ -6,7 +6,7 @@ import TopNavigation from 'components/TopNavigationBar';
 import '../styles/HomeRoute.scss';
 
 const HomeRoute = (props) => {
-  const { photos, topics } = props;
+  const { photos, topics, selectPhoto } = props;
   const [favourites, setFavourites] = useState({});
 
   const toggleFavourite = (id) => {
@@ -31,8 +31,9 @@ const HomeRoute = (props) => {
     <div className="home-route">
       <TopNavigation topics={topics} isFavPhotoExist={isFavPhotoExist()} />
       <FavouritesContext.Provider value={favouritesContext}>
-        <PhotoList photos={photos} />
+        <PhotoList photos={photos} selectPhoto={selectPhoto} />
       </FavouritesContext.Provider>
+
     </div >
   );
 };

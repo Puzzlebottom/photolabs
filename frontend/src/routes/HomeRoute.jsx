@@ -19,12 +19,18 @@ const HomeRoute = (props) => {
     setFavourites(currentFavourites);
   };
 
+  const isFavPhotoExist = () => {
+    const currentFavourites = Object.keys(favourites);
+    return photos.some(photo => currentFavourites.includes(photo.id));
+  };
+
   const favouritesContext = { favourites, toggleFavourite };
+
 
   return (
     <div className="home-route">
+      <TopNavigation topics={topics} isFavPhotoExist={isFavPhotoExist()} />
       <FavouritesContext.Provider value={favouritesContext}>
-        <TopNavigation topics={topics} />
         <PhotoList photos={photos} />
       </FavouritesContext.Provider>
     </div >

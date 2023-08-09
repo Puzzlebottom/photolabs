@@ -6,8 +6,8 @@ const ACTIONS = {
   FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
   FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
   SELECT_PHOTO: 'SELECT_PHOTO',
-  // SET_PHOTO_DATA: 'SET_PHOTO_DATA',
-  // SET_TOPIC_DATA: 'SET_TOPIC_DATA',
+  SET_PHOTO_DATA: 'SET_PHOTO_DATA',
+  SET_TOPIC_DATA: 'SET_TOPIC_DATA',
 };
 
 const reducers = {
@@ -24,6 +24,18 @@ const reducers = {
   SELECT_PHOTO(state, action) {
     const selected = action.value ? state.photos.find(photo => photo.id === action.value) : null;
     return { ...state, selected };
+  },
+  SET_PHOTO_DATA(state, action) {
+    const currentPhotoIds = state.photos.map(photo => photo.id);
+    const newPhotos = action.value.filter(photo => !currentPhotoIds.includes(photo.id));
+    const photos = [...state.photos, ...newPhotos];
+    return { ...state, photos };
+  },
+  SET_TOPIC_DATA(state, action) {
+    const currentTopicIds = state.topics.map(topic => topic.id);
+    const newTopics = action.value.filter(topic => !currentTopicIds.includes(topic.id));
+    const topics = [...state.topics, ...newTopics];
+    return { ...state, topics };
   }
 };
 

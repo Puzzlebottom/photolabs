@@ -5,8 +5,9 @@ import PhotoFavButton from 'components/PhotoFavButton';
 import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
 
-const PhotoDetailsModal = (props) => {
-  const { selected: { id, location, urls, user, similar_photos }, favourites, selectPhoto, closeModal, toggleFavourite } = props;
+const PhotoDetailsModal = ({ selected, favourites, selectPhoto, closeModal, toggleFavourite }) => {
+  const { id, location, urls, user, similar_photos } = selected;
+  const photos = Object.values(similar_photos);
 
   return (
     <div className="photo-details-modal">
@@ -14,7 +15,7 @@ const PhotoDetailsModal = (props) => {
         <img src={closeSymbol} alt="close symbol" />
       </button>
       <div className="photo-details-modal__selection">
-        <PhotoFavButton id={id} favourites={favourites} toggleFavourite={toggleFavourite} />
+        <PhotoFavButton {...{ id, favourites, toggleFavourite }} />
         <img src={urls.regular} className="photo-details-modal__image" onClick={() => selectPhoto(id)} />
       </div>
       <div className="photo-details-modal__photographer-details">
@@ -24,7 +25,7 @@ const PhotoDetailsModal = (props) => {
           <div className="photo-details-modal__photographer-location">{`${location.city}, ${location.country}`}</div>
         </div>
       </div>
-      <PhotoList photos={Object.values(similar_photos)} favourites={favourites} selectPhoto={selectPhoto} toggleFavourite={toggleFavourite} />
+      <PhotoList {...{ photos, favourites, selectPhoto, toggleFavourite }} />
     </div>
   );
 };

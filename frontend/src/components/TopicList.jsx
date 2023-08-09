@@ -3,9 +3,9 @@ import TopicListItem from "./TopicListItem";
 
 import "../styles/TopicList.scss";
 
-const TopicList = (props) => {
+const TopicList = ({ topics }) => {
 
-  const topicList = props.topics.map((topic) => {
+  const topicList = topics.map((topic) => {
     return <TopicListItem key={topic.id} {...topic} />;
   });
 

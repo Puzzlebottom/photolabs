@@ -8,7 +8,7 @@ const HomeRoute = ({ photos, topics, favourites, selectPhoto, toggleFavourite })
 
   const isFavPhotoExist = () => {
     const currentFavourites = Object.keys(favourites);
-    return photos.some(photo => currentFavourites.includes(photo.id));
+    return photos.some(photo => currentFavourites.includes(`${photo.id}`));
   };
 
   return (

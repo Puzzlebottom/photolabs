@@ -1,6 +1,5 @@
-import { useReducer } from "react";
-import photos from 'mocks/photos';
-import topics from 'mocks/topics';
+import { useReducer, useEffect } from "react";
+import axios from "axios";
 
 const ACTIONS = {
   FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
@@ -22,7 +21,7 @@ const reducers = {
     return { ...state, favourites };
   },
   SELECT_PHOTO(state, action) {
-    const selected = action.value ? state.photos.find(photo => photo.id === action.value) : null;
+    const selected = action.value ? state.photos.find(photo => photo.id === action.value) : {};
     return { ...state, selected };
   },
   SET_PHOTO_DATA(state, action) {
@@ -48,9 +47,21 @@ const reducer = (state, action) => {
 
 const useApplicationData = () => {
 
-  const initialState = { favourites: {}, selected: null, photos, topics };
+  const initialState = { favourites: {}, selected: {}, photos: [], topics: [] };
   const [state, dispatch] = useReducer(reducer, initialState);
   const { FAV_PHOTO_ADDED, FAV_PHOTO_REMOVED, SELECT_PHOTO, SET_PHOTO_DATA, SET_TOPIC_DATA } = ACTIONS;
+
+  useEffect(() => {
+    const photosPromise = axios.get('/api/photos');
+    const topicsPromise = axios.get('/api/topics');
+
+    Promise.all([photosPromise, topicsPromise])
+      .then((res) => {
+        const [photos, topics] = res;
+        dispatch({ type: SET_PHOTO_DATA, value: photos.data });
+        dispatch({ type: SET_TOPIC_DATA, value: topics.data });
+      });
+  }, []);
 
   const toggleFavourite = (id) => {
     if (state.favourites[id]) {

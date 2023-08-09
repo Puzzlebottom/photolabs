@@ -14,10 +14,12 @@ const App = () => {
     toggleFavourite
   } = useApplicationData();
 
+  const isSelected = Object.keys(selected).length > 0;
+
   return (
     <div className="App">
       <HomeRoute {...{ photos, topics, favourites, selectPhoto, toggleFavourite }} />
-      {selected && <PhotoDetailsModal {...{ selected, favourites, selectPhoto, closeModal, toggleFavourite }} />}
+      {isSelected && <PhotoDetailsModal {...{ selected, favourites, selectPhoto, closeModal, toggleFavourite }} />}
     </div>
   );
 };

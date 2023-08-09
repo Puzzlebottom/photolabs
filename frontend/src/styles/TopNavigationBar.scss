@@ -1,5 +1,4 @@
 .top-nav-bar {
-  background-color: #FFFFFF;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -18,4 +17,8 @@
   color: #111;
   text-underline-position: auto;
   margin-left: 24px;
+}
+
+.top-nav-bar__links {
+  display: flex;
 }

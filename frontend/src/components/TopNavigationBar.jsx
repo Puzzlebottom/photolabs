@@ -8,8 +8,10 @@ const TopNavigation = ({ topics, isFavPhotoExist }) => {
   return (
     <div className="top-nav-bar">
       <span className="top-nav-bar__logo">PhotoLabs</span>
-      <TopicList {...{ topics }} />
-      <FavBadge {...{ isFavPhotoExist }} />
+      <span className="top-nav-bar__links">
+        <TopicList {...{ topics }} />
+        <FavBadge {...{ isFavPhotoExist }} />
+      </span>
     </div>
   );
 };

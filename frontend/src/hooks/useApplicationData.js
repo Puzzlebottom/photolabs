@@ -48,18 +48,21 @@ const reducer = (state, action) => {
 
 const useApplicationData = () => {
 
-  const [state, dispatch] = useReducer(reducer, { favourites: {}, selected: null, photos, topics });
+  const initialState = { favourites: {}, selected: null, photos, topics };
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { FAV_PHOTO_ADDED, FAV_PHOTO_REMOVED, SELECT_PHOTO, SET_PHOTO_DATA, SET_TOPIC_DATA } = ACTIONS;
 
   const toggleFavourite = (id) => {
     if (state.favourites[id]) {
-      dispatch({ type: ACTIONS.FAV_PHOTO_REMOVED, value: id });
+      dispatch({ type: FAV_PHOTO_REMOVED, value: id });
     } else {
-      dispatch({ type: ACTIONS.FAV_PHOTO_ADDED, value: id });
+      dispatch({ type: FAV_PHOTO_ADDED, value: id });
     }
   };
 
-  const selectPhoto = (id) => dispatch({ type: ACTIONS.SELECT_PHOTO, value: id });
-  const closeModal = () => dispatch({ type: ACTIONS.SELECT_PHOTO, value: null });
+  const selectPhoto = (id) => dispatch({ type: SELECT_PHOTO, value: id });
+
+  const closeModal = () => dispatch({ type: SELECT_PHOTO, value: null });
 
   return {
     state,

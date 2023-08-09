@@ -6,8 +6,7 @@ import "../styles/TopicList.scss";
 const TopicList = (props) => {
 
   const topicList = props.topics.map((topic) => {
-    const { id, slug, title } = topic;
-    return <TopicListItem key={id} slug={slug} title={title} />;
+    return <TopicListItem key={topic.id} {...topic} />;
   });
 
   return (

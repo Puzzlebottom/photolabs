@@ -1,13 +1,11 @@
 import React, { useContext } from 'react';
 import PhotoList from 'components/PhotoList';
 import TopNavigation from 'components/TopNavigationBar';
-import { FavouritesContext } from 'contexts/FavouritesContext';
 
 import '../styles/HomeRoute.scss';
 
 const HomeRoute = (props) => {
-  const { photos, topics, selectPhoto } = props;
-  const { favourites } = useContext(FavouritesContext);
+  const { photos, topics, favourites, selectPhoto, toggleFavourite } = props;
 
   const isFavPhotoExist = () => {
     const currentFavourites = Object.keys(favourites);
@@ -17,7 +15,7 @@ const HomeRoute = (props) => {
   return (
     <div className="home-route">
       <TopNavigation topics={topics} isFavPhotoExist={isFavPhotoExist()} />
-      <PhotoList photos={photos} selectPhoto={selectPhoto} />
+      <PhotoList photos={photos} favourites={favourites} selectPhoto={selectPhoto} toggleFavourite={toggleFavourite} />
     </div >
   );
 };

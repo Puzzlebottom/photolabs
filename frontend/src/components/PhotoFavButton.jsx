@@ -1,13 +1,10 @@
-import React, { useCallback, useContext } from 'react';
-import { FavouritesContext } from 'contexts/FavouritesContext';
-
+import React, { useCallback } from 'react';
 import FavIcon from './FavIcon';
 import '../styles/PhotoFavButton.scss';
 
 
 function PhotoFavButton(props) {
-  const { id } = props;
-  const { favourites, toggleFavourite } = useContext(FavouritesContext);
+  const { id, favourites, toggleFavourite } = props;
 
   return (
     <div className="photo-list__fav-icon" onClick={() => toggleFavourite(id)}>

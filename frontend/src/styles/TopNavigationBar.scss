@@ -8,6 +8,8 @@
   -moz-box-shadow: 0 4px 6px -6px #222;
   box-shadow: 0 4px 6px -6px #222;
   height: 72px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .top-nav-bar__logo {
@@ -16,7 +18,6 @@
   font-size: 24px;
   color: #111;
   text-underline-position: auto;
-  margin-left: 24px;
 }
 
 .top-nav-bar__links {

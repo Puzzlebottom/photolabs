@@ -3,10 +3,10 @@ import TopicListItem from "./TopicListItem";
 
 import "../styles/TopicList.scss";
 
-const TopicList = ({ topics }) => {
+const TopicList = ({ topics, selectedTopic, selectTopic }) => {
 
   const topicList = topics.map((topic) => {
-    return <TopicListItem key={topic.id} {...topic} />;
+    return <TopicListItem key={topic.id} {...{ ...topic, selectedTopic, selectTopic }} />;
   });
 
   return (

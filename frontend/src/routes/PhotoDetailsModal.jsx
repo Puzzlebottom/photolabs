@@ -5,8 +5,8 @@ import PhotoFavButton from 'components/PhotoFavButton';
 import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
 
-const PhotoDetailsModal = ({ selected, favourites, selectPhoto, closeModal, toggleFavourite }) => {
-  const { id, location, urls, user, similar_photos } = selected;
+const PhotoDetailsModal = ({ selectedPhoto, favourites, selectPhoto, closeModal, toggleFavourite }) => {
+  const { id, location, urls, user, similar_photos } = selectedPhoto;
   const photos = Object.values(similar_photos);
 
   return (

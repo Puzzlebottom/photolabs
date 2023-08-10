@@ -2,10 +2,12 @@ import React from "react";
 
 import "../styles/TopicListItem.scss";
 
-const TopicListItem = ({ id, slug, title }) => {
+const TopicListItem = ({ id, slug, title, selectedTopic, selectTopic }) => {
+
+  const isSelected = selectedTopic === id;
   return (
-    <div className="topic-list__item">
-      <span>{title}</span>
+    <div className={`topic-list__item${isSelected ? '--selected' : ''}`}>
+      <span onClick={() => selectTopic(id)}>{title}</span>
     </div>
   );
 };

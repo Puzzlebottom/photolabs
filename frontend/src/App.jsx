@@ -8,18 +8,19 @@ import './App.scss';
 // Note: Rendering a single component to build components in isolation
 const App = () => {
   const {
-    state: { photos, topics, selected, favourites },
+    state: { photos, topics, selectedPhoto, selectedTopic, favourites },
     closeModal,
     selectPhoto,
+    selectTopic,
     toggleFavourite
   } = useApplicationData();
 
-  const isSelected = Object.keys(selected).length > 0;
+  const isSelected = Object.keys(selectedPhoto).length > 0;
 
   return (
     <div className="App">
-      <HomeRoute {...{ photos, topics, favourites, selectPhoto, toggleFavourite }} />
-      {isSelected && <PhotoDetailsModal {...{ selected, favourites, selectPhoto, closeModal, toggleFavourite }} />}
+      <HomeRoute {...{ photos, topics, favourites, selectPhoto, selectTopic, selectedTopic, toggleFavourite }} />
+      {isSelected && <PhotoDetailsModal {...{ selectedPhoto, favourites, selectPhoto, closeModal, toggleFavourite }} />}
     </div>
   );
 };

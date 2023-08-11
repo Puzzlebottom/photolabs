@@ -53,6 +53,7 @@ const useApplicationData = () => {
   const { FAV_PHOTO_ADDED, FAV_PHOTO_REMOVED, SELECT_PHOTO, SELECT_TOPIC, SET_PHOTO_DATA, SET_TOPIC_DATA } = ACTIONS;
 
   useEffect(() => {
+    console.log('GET INITAL');
     const photosPromise = axios.get('/api/photos');
     const topicsPromise = axios.get('/api/topics');
 
@@ -64,15 +65,6 @@ const useApplicationData = () => {
       });
   }, []);
 
-  useEffect(() => {
-    const topicId = state.selectedTopic;
-    const url = topicId ? `/api/topics/photos/${topicId}` : '/api/photos';
-    axios.get(url)
-      .then((res) => {
-        dispatch({ type: SET_PHOTO_DATA, value: res.data });
-      });
-  }, [state.selectedTopic]);
-
   const toggleFavourite = (id) => {
     if (state.favourites[id]) {
       dispatch({ type: FAV_PHOTO_REMOVED, value: id });
@@ -83,7 +75,14 @@ const useApplicationData = () => {
 
   const selectPhoto = (id) => dispatch({ type: SELECT_PHOTO, value: id });
 
-  const selectTopic = (id) => dispatch({ type: SELECT_TOPIC, value: id });
+  const selectTopic = (id) => {
+    const url = id ? `/api/topics/photos/${id}` : '/api/photos';
+    axios.get(url)
+      .then((res) => {
+        dispatch({ type: SET_PHOTO_DATA, value: res.data });
+        dispatch({ type: SELECT_TOPIC, value: id });
+      });
+  };
 
   const closeModal = () => dispatch({ type: SELECT_PHOTO, value: null });
 

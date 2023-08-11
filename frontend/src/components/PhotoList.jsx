@@ -2,10 +2,10 @@ import React from "react";
 import PhotoListItem from "./PhotoListItem";
 import "../styles/PhotoList.scss";
 
-const PhotoList = ({ photos, favourites, selectPhoto, toggleFavourite }) => {
+const PhotoList = ({ photos, favourites, scrollToTop, selectPhoto, toggleFavourite }) => {
 
   const photoList = photos.map((photo) => {
-    return <PhotoListItem key={photo.id} {...photo} {...{ favourites, selectPhoto, toggleFavourite }} />;
+    return <PhotoListItem key={photo.id} {...photo} {...{ favourites, scrollToTop, selectPhoto, toggleFavourite }} />;
   });
 
   return (

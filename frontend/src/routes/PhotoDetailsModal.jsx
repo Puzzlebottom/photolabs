@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PhotoList from 'components/PhotoList';
 import PhotoFavButton from 'components/PhotoFavButton';
 
@@ -9,8 +9,13 @@ const PhotoDetailsModal = ({ selectedPhoto, favourites, selectPhoto, closeModal,
   const { id, location, urls, user, similar_photos } = selectedPhoto;
   const photos = Object.values(similar_photos);
 
+  const modalRef = useRef(null);
+  const scrollToTop = () => {
+    modalRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <div className="photo-details-modal">
+    <div ref={modalRef} className="photo-details-modal">
       <button className="photo-details-modal__close-button" onClick={closeModal}>
         <img src={closeSymbol} alt="close symbol" />
       </button>
@@ -25,7 +30,7 @@ const PhotoDetailsModal = ({ selectedPhoto, favourites, selectPhoto, closeModal,
           <div className="photo-details-modal__photographer-location">{`${location.city}, ${location.country}`}</div>
         </div>
       </div>
-      <PhotoList {...{ photos, favourites, selectPhoto, toggleFavourite }} />
+      <PhotoList {...{ photos, favourites, selectPhoto, toggleFavourite, scrollToTop }} />
     </div>
   );
 };

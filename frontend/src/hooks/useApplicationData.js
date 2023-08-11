@@ -53,7 +53,6 @@ const useApplicationData = () => {
   const { FAV_PHOTO_ADDED, FAV_PHOTO_REMOVED, SELECT_PHOTO, SELECT_TOPIC, SET_PHOTO_DATA, SET_TOPIC_DATA } = ACTIONS;
 
   useEffect(() => {
-    console.log('GET INITAL');
     const photosPromise = axios.get('/api/photos');
     const topicsPromise = axios.get('/api/topics');
 

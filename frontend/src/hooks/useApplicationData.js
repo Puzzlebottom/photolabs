@@ -10,6 +10,8 @@ const ACTIONS = {
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
 };
 
+//Add new state for curated photos, distinct from photodata. favourite filters are done from curated photos, selections are done from photodata
+
 const reducers = {
   FAV_PHOTO_ADDED(state, action) {
     const favourites = { ...state.favourites };

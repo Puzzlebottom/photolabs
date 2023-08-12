@@ -1,38 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import PhotoList from 'components/PhotoList';
 import PhotoFavButton from 'components/PhotoFavButton';
+import useModal from 'hooks/useModal';
 
 import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
 
 const PhotoDetailsModal = ({ selectedPhoto, favourites, selectPhoto, closeModal, toggleFavourite }) => {
+
   const { id, location, urls, user, similar_photos } = selectedPhoto;
   const photos = Object.values(similar_photos);
-
-  const [showSimilar, setShowSimilar] = useState(false);
-  const modalRef = useRef(null);
-
-  const scrollTo = (position) => {
-    const scrollingElement = modalRef.current;
-    if (position === 'top') {
-      scrollingElement.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    if (position === 'similar') {
-      const target = scrollingElement.querySelector('button#similar-photos');
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const toggleSimilar = () => setShowSimilar(!showSimilar);
-
-  useEffect(() => {
-    if (showSimilar) {
-      scrollTo('similar');
-    }
-    if (!showSimilar) {
-      scrollTo('top');
-    }
-  }, [showSimilar]);
+  const { showSimilar, modalRef, toggleSimilar, scrollTo } = useModal();
 
   return (
     <div ref={modalRef} className="photo-details-modal">

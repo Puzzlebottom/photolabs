@@ -72,6 +72,12 @@ const useApplicationData = () => {
     }
   };
 
+  const showFavourites = () => {
+    const { photos, favourites } = state;
+    const visibleFavourites = photos.filter((photo) => favourites[photo.id]);
+    if (visibleFavourites.length) dispatch({ type: SET_PHOTO_DATA, value: visibleFavourites });
+  };
+
   const selectPhoto = (id) => dispatch({ type: SELECT_PHOTO, value: id });
 
   const selectTopic = (id) => {
@@ -88,6 +94,7 @@ const useApplicationData = () => {
   return {
     state,
     toggleFavourite,
+    showFavourites,
     selectPhoto,
     selectTopic,
     closeModal

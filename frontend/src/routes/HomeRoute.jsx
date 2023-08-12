@@ -4,7 +4,7 @@ import TopNavigation from 'components/TopNavigationBar';
 
 import '../styles/HomeRoute.scss';
 
-const HomeRoute = ({ photos, topics, favourites, selectPhoto, selectTopic, selectedTopic, toggleFavourite }) => {
+const HomeRoute = ({ photos, topics, favourites, selectPhoto, selectTopic, selectedTopic, toggleFavourite, showFavourites }) => {
 
   const isFavPhotoExist = () => {
     const currentFavourites = Object.keys(favourites);
@@ -13,7 +13,7 @@ const HomeRoute = ({ photos, topics, favourites, selectPhoto, selectTopic, selec
 
   return (
     <div className="home-route">
-      <TopNavigation {...{ topics, selectedTopic, selectTopic }} isFavPhotoExist={isFavPhotoExist()} />
+      <TopNavigation {...{ topics, selectedTopic, selectTopic, showFavourites, isFavPhotoExist }} />
       <PhotoList {...{ photos, favourites, selectPhoto, toggleFavourite }} />
     </div >
   );

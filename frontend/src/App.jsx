@@ -5,21 +5,21 @@ import useApplicationData from 'hooks/useApplicationData';
 
 import './App.scss';
 
-// Note: Rendering a single component to build components in isolation
 const App = () => {
   const {
     state: { photos, topics, selectedPhoto, selectedTopic, favourites },
     closeModal,
     selectPhoto,
     selectTopic,
-    toggleFavourite
+    toggleFavourite,
+    showFavourites
   } = useApplicationData();
 
   const isSelected = Object.keys(selectedPhoto).length > 0;
 
   return (
     <div className="App">
-      <HomeRoute {...{ photos, topics, favourites, selectPhoto, selectTopic, selectedTopic, toggleFavourite }} />
+      <HomeRoute {...{ photos, topics, favourites, selectPhoto, selectTopic, selectedTopic, toggleFavourite, showFavourites }} />
       {isSelected && <PhotoDetailsModal {...{ selectedPhoto, favourites, selectPhoto, closeModal, toggleFavourite }} />}
     </div>
   );

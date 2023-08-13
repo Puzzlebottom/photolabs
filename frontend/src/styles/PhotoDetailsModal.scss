@@ -44,8 +44,12 @@
   flex-direction: column;
   align-self: center;
   background-color: #FFFFFF;
+  border-width: 1px;
+  border-color: #E6E6E6;
+  border-style: solid;
   margin: 1em;
   padding: 16px;
+  max-width: 90%;
   border-radius: 8px;
 }
 

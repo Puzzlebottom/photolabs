@@ -7,6 +7,7 @@ const ACTIONS = {
   SELECT_PHOTO: 'SELECT_PHOTO',
   SELECT_TOPIC: 'SELECT_TOPIC',
   SET_PHOTO_DATA: 'SET_PHOTO_DATA',
+  SET_VISIBLE_PHOTOS: 'SET_VISIBLE_PHOTOS',
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
 };
 
@@ -35,6 +36,10 @@ const reducers = {
     const photos = [...action.value];
     return { ...state, photos };
   },
+  SET_VISIBLE_PHOTOS(state, action) {
+    const visible_photos = [...action.value];
+    return { ...state, visible_photos };
+  },
   SET_TOPIC_DATA(state, action) {
     const topics = [...action.value];
     return { ...state, topics };
@@ -50,9 +55,9 @@ const reducer = (state, action) => {
 
 const useApplicationData = () => {
 
-  const initialState = { favourites: {}, selectedPhoto: {}, selectedTopic: '', photos: [], topics: [] };
+  const initialState = { favourites: {}, selectedPhoto: {}, selectedTopic: '', visible_photos: [], photos: [], topics: [] };
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { FAV_PHOTO_ADDED, FAV_PHOTO_REMOVED, SELECT_PHOTO, SELECT_TOPIC, SET_PHOTO_DATA, SET_TOPIC_DATA } = ACTIONS;
+  const { FAV_PHOTO_ADDED, FAV_PHOTO_REMOVED, SELECT_PHOTO, SELECT_TOPIC, SET_PHOTO_DATA, SET_VISIBLE_PHOTOS, SET_TOPIC_DATA } = ACTIONS;
 
   useEffect(() => {
     const photosPromise = axios.get('/api/photos');
@@ -62,6 +67,7 @@ const useApplicationData = () => {
       .then((res) => {
         const [photos, topics] = res;
         dispatch({ type: SET_PHOTO_DATA, value: photos.data });
+        dispatch({ type: SET_VISIBLE_PHOTOS, value: photos.data });
         dispatch({ type: SET_TOPIC_DATA, value: topics.data });
       });
   }, []);
@@ -77,7 +83,7 @@ const useApplicationData = () => {
   const showFavourites = () => {
     const { photos, favourites } = state;
     const visibleFavourites = photos.filter((photo) => favourites[photo.id]);
-    if (visibleFavourites.length) dispatch({ type: SET_PHOTO_DATA, value: visibleFavourites });
+    if (visibleFavourites.length) dispatch({ type: SET_VISIBLE_PHOTOS, value: visibleFavourites });
   };
 
   const selectPhoto = (id) => dispatch({ type: SELECT_PHOTO, value: id });
@@ -86,7 +92,7 @@ const useApplicationData = () => {
     const url = id ? `/api/topics/photos/${id}` : '/api/photos';
     axios.get(url)
       .then((res) => {
-        dispatch({ type: SET_PHOTO_DATA, value: res.data });
+        dispatch({ type: SET_VISIBLE_PHOTOS, value: res.data });
         dispatch({ type: SELECT_TOPIC, value: id });
       });
   };

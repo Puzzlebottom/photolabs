@@ -17,11 +17,11 @@
 }
 
 .photo-details-modal__close-button {
-  position: fixed;
+  position: sticky;
   display: flex;
-  align-items: center;
-  top: 1em;
-  left: 1em;
+  width: fit-content;
+  top: 0;
+  left: 0;
   background-color: white;
   font-size: 16px;
   border: none;

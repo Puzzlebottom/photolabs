@@ -81,8 +81,8 @@ const useApplicationData = () => {
   };
 
   const showFavourites = () => {
-    const { photos, favourites } = state;
-    const visibleFavourites = photos.filter((photo) => favourites[photo.id]);
+    const { visible_photos, favourites } = state;
+    const visibleFavourites = visible_photos.filter((photo) => favourites[photo.id]);
     if (visibleFavourites.length) dispatch({ type: SET_VISIBLE_PHOTOS, value: visibleFavourites });
   };
 

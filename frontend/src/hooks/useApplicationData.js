@@ -7,11 +7,9 @@ const ACTIONS = {
   SELECT_PHOTO: 'SELECT_PHOTO',
   SELECT_TOPIC: 'SELECT_TOPIC',
   SET_PHOTO_DATA: 'SET_PHOTO_DATA',
-  SET_VISIBLE_PHOTOS: 'SET_VISIBLE_PHOTOS',
+  SET_VISIBLE_PHOTO_IDS: 'SET_VISIBLE_PHOTO_IDS',
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
 };
-
-//Add new state for curated photos, distinct from photodata. favourite filters are done from curated photos, selections are done from photodata
 
 const reducers = {
   FAV_PHOTO_ADDED(state, action) {
@@ -25,7 +23,7 @@ const reducers = {
     return { ...state, favourites };
   },
   SELECT_PHOTO(state, action) {
-    const selectedPhoto = action.value ? state.photos.find(photo => photo.id === action.value) : {};
+    const selectedPhoto = action.value ? state.photo_data.find(photo => photo.id === action.value) : {};
     return { ...state, selectedPhoto };
   },
   SELECT_TOPIC(state, action) {
@@ -33,12 +31,12 @@ const reducers = {
     return { ...state, selectedTopic };
   },
   SET_PHOTO_DATA(state, action) {
-    const photos = [...action.value];
-    return { ...state, photos };
+    const photo_data = [...action.value];
+    return { ...state, photo_data };
   },
-  SET_VISIBLE_PHOTOS(state, action) {
-    const visible_photos = [...action.value];
-    return { ...state, visible_photos };
+  SET_VISIBLE_PHOTO_IDS(state, action) {
+    const visible_photo_ids = [...action.value];
+    return { ...state, visible_photo_ids };
   },
   SET_TOPIC_DATA(state, action) {
     const topics = [...action.value];
@@ -55,9 +53,9 @@ const reducer = (state, action) => {
 
 const useApplicationData = () => {
 
-  const initialState = { favourites: {}, selectedPhoto: {}, selectedTopic: '', visible_photos: [], photos: [], topics: [] };
+  const initialState = { favourites: {}, selectedPhoto: {}, selectedTopic: '', visible_photo_ids: [], photo_data: [], topics: [] };
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { FAV_PHOTO_ADDED, FAV_PHOTO_REMOVED, SELECT_PHOTO, SELECT_TOPIC, SET_PHOTO_DATA, SET_VISIBLE_PHOTOS, SET_TOPIC_DATA } = ACTIONS;
+  const { FAV_PHOTO_ADDED, FAV_PHOTO_REMOVED, SELECT_PHOTO, SELECT_TOPIC, SET_PHOTO_DATA, SET_VISIBLE_PHOTO_IDS, SET_TOPIC_DATA } = ACTIONS;
 
   useEffect(() => {
     const photosPromise = axios.get('/api/photos');
@@ -67,7 +65,7 @@ const useApplicationData = () => {
       .then((res) => {
         const [photos, topics] = res;
         dispatch({ type: SET_PHOTO_DATA, value: photos.data });
-        dispatch({ type: SET_VISIBLE_PHOTOS, value: photos.data });
+        dispatch({ type: SET_VISIBLE_PHOTO_IDS, value: photos.data.map(photo => photo.id) });
         dispatch({ type: SET_TOPIC_DATA, value: topics.data });
       });
   }, []);
@@ -81,9 +79,10 @@ const useApplicationData = () => {
   };
 
   const showFavourites = () => {
-    const { visible_photos, favourites } = state;
-    const visibleFavourites = visible_photos.filter((photo) => favourites[photo.id]);
-    if (visibleFavourites.length) dispatch({ type: SET_VISIBLE_PHOTOS, value: visibleFavourites });
+    const { visible_photo_ids, favourites } = state;
+    const visibleFavourites = visible_photo_ids.filter((id) => favourites[id]);
+    console.log('visibleFavourites', visibleFavourites);
+    if (visibleFavourites.length) dispatch({ type: SET_VISIBLE_PHOTO_IDS, value: visibleFavourites });
   };
 
   const selectPhoto = (id) => dispatch({ type: SELECT_PHOTO, value: id });
@@ -92,7 +91,7 @@ const useApplicationData = () => {
     const url = id ? `/api/topics/photos/${id}` : '/api/photos';
     axios.get(url)
       .then((res) => {
-        dispatch({ type: SET_VISIBLE_PHOTOS, value: res.data });
+        dispatch({ type: SET_VISIBLE_PHOTO_IDS, value: res.data.map(photo => photo.id) });
         dispatch({ type: SELECT_TOPIC, value: id });
       });
   };

@@ -7,7 +7,7 @@ import './App.scss';
 
 const App = () => {
   const {
-    state: { photos, visible_photos, topics, selectedPhoto, selectedTopic, favourites },
+    state: { photo_data, visible_photo_ids, topics, selectedPhoto, selectedTopic, favourites },
     closeModal,
     selectPhoto,
     selectTopic,
@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <HomeRoute {...{ photos, visible_photos, topics, favourites, selectPhoto, selectTopic, selectedTopic, toggleFavourite, showFavourites }} />
+      <HomeRoute {...{ photo_data, visible_photo_ids, topics, favourites, selectPhoto, selectTopic, selectedTopic, toggleFavourite, showFavourites }} />
       {isSelected && <PhotoDetailsModal {...{ selectedPhoto, favourites, selectPhoto, closeModal, toggleFavourite }} />}
     </div>
   );

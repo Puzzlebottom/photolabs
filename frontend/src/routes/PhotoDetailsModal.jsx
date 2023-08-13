@@ -9,7 +9,7 @@ import closeSymbol from '../assets/closeSymbol.svg';
 const PhotoDetailsModal = ({ selectedPhoto, favourites, selectPhoto, closeModal, toggleFavourite }) => {
 
   const { id, location, urls, user, similar_photos } = selectedPhoto;
-  const visible_photos = Object.values(similar_photos);
+  const photos = Object.values(similar_photos);
   const { showSimilar, modalRef, toggleSimilar, scrollTo } = useModal();
 
   return (
@@ -29,7 +29,7 @@ const PhotoDetailsModal = ({ selectedPhoto, favourites, selectPhoto, closeModal,
         </div>
       </div>
       <button className="photo-details-modal__show-similar-button" id="similar-photos" onClick={toggleSimilar}>SIMILAR PHOTOS</button>
-      {showSimilar && <PhotoList {...{ visible_photos, favourites, selectPhoto, toggleFavourite, scrollTo }} />}
+      {showSimilar && <PhotoList {...{ photos, favourites, selectPhoto, toggleFavourite, scrollTo }} />}
     </div>
   );
 };

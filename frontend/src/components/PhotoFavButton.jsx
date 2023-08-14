@@ -6,7 +6,7 @@ import '../styles/PhotoFavButton.scss';
 function PhotoFavButton({ id, favourites, toggleFavourite }) {
 
   const handleClick = (e) => {
-    e.stopPropagation();
+    e.stopPropagation(); // onClicks on onClicks don't mix
     toggleFavourite(id);
   };
 

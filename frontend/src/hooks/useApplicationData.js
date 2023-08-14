@@ -102,8 +102,9 @@ const useApplicationData = () => {
   // Consumed as an onClick by the FavBdage on the TopNavigationBar
   const showFavourites = () => {
     const { visible_photo_ids, favourites } = state;
-    const visibleFavourites = visible_photo_ids.filter((id) => favourites[id]);
-    console.log('visibleFavourites', visibleFavourites);
+    const visibleIds = Object.keys(visible_photo_ids);
+    const favouriteIds = Object.keys(favourites);
+    const visibleFavourites = visibleIds.filter((id) => favouriteIds.includes(id));
     if (visibleFavourites.length) dispatch({ type: SET_VISIBLE_PHOTO_IDS, value: visibleFavourites });
   };
 

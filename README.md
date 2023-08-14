@@ -1,26 +1,35 @@
-# react-photolabs
-The PhotoLabs project for the Web Development React course programming.
-
 # Photolabs
 
-## Setup
+A demonstration project built for Lighthouse Labs web development bootcamp.  Photolabs implements a modern React frontend, Postgresql persistence layer and a simple Express API server to organize and display a photo collection. 
+[Does your wife like photographs?](https://youtu.be/STTL-jOrnDQ)
+
+## Getting Started
 
 Install dependencies with `npm install` in each respective `/frontend` and `/backend`.
 
-## [Frontend] Running Webpack Development Server
+### [Frontend] Running Webpack Development Server
 
 ```sh
 cd frontend
 npm start
 ```
 
-## [Backend] Running Backend Servier
+### [Backend] Running Backend Servier
 
-Read `backend/readme` for further setup details.
+Read [backend/readme](/backend/README.md) for further setup details.
 
 ```sh
 cd backend
 npm start
 ```
 
-[Does your wife like photographs?](https://youtu.be/STTL-jOrnDQ)
+## Dependencies
+
+- Pg
+- Express
+- React
+- Node
+
+## Features
+
+

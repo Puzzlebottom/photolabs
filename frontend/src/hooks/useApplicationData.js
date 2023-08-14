@@ -42,9 +42,10 @@ const reducers = {
     const photo_data = [...action.value];
     return { ...state, photo_data };
   },
-  // Sets an array of ids used to filter photo data
+  // Takes an array of photo ids and converts its elements into object keys for faster lookups
   SET_VISIBLE_PHOTO_IDS(state, action) {
-    const visible_photo_ids = [...action.value];
+    const visible_photo_ids = {};
+    action.value.map(photoId => visible_photo_ids[photoId] = true);
     return { ...state, visible_photo_ids };
   },
   // Populates app with data for all topics
@@ -68,7 +69,7 @@ const reducer = (state, action) => {
 // Particulars of the PhotoDetailsModal (visible, scroll behaviour) live in a separate hook.
 const useApplicationData = () => {
 
-  const initialState = { favourites: {}, selectedPhoto: {}, selectedTopic: '', visible_photo_ids: [], photo_data: [], topics: [] };
+  const initialState = { favourites: {}, selectedPhoto: {}, selectedTopic: '', visible_photo_ids: {}, photo_data: [], topics: [] };
   const [state, dispatch] = useReducer(reducer, initialState);
   const { FAV_PHOTO_ADDED, FAV_PHOTO_REMOVED, SELECT_PHOTO, SELECT_TOPIC, SET_PHOTO_DATA, SET_VISIBLE_PHOTO_IDS, SET_TOPIC_DATA } = ACTIONS;
 

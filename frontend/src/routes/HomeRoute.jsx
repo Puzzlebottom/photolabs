@@ -4,7 +4,7 @@ import TopNavigation from 'components/TopNavigationBar';
 
 import '../styles/HomeRoute.scss';
 
-const HomeRoute = ({ photo_data, visible_photo_ids, topics, favourites, selectPhoto, selectTopic, selectedTopic, toggleFavourite, showFavourites }) => {
+const HomeRoute = ({ photo_data, visible_photo_ids, topics, favourites, selectPhoto, selectTopic, selectedTopic, toggleFavourite, showFavourites, runSearch }) => {
   /**
    * using a single state for all available photos and filtering them based on 
    * visiblity criteria opens up more possibilities for complex filtering without 
@@ -27,7 +27,7 @@ const HomeRoute = ({ photo_data, visible_photo_ids, topics, favourites, selectPh
 
   return (
     <div className="home-route">
-      <TopNavigation {...{ topics, selectedTopic, selectTopic, showFavourites, isFavPhotoExist }} />
+      <TopNavigation {...{ topics, selectedTopic, selectTopic, showFavourites, isFavPhotoExist, runSearch }} />
       <PhotoList {...{ photos, favourites, selectPhoto, toggleFavourite }} />
     </div >
   );

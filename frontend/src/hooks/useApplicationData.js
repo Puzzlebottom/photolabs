@@ -11,6 +11,8 @@ const ACTIONS = {
   SET_PHOTO_DATA: 'SET_PHOTO_DATA',
   SET_VISIBLE_PHOTO_IDS: 'SET_VISIBLE_PHOTO_IDS',
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
+  SEARCH_LOCATIONS: 'SEARCH_LOCATIONS',
+  SEARCH_PHOTOGRAPHERS: 'SEARCH_PHOTOGRAPHERS'
 };
 
 const reducers = {
@@ -72,6 +74,38 @@ const reducers = {
   SET_TOPIC_DATA(state, action) {
     const topics = [...action.value];
     return { ...state, topics };
+  },
+
+  /**
+   *  Searches the full collection of photos for photographer names that include
+   *  the provided search string.
+   */
+  SEARCH_PHOTOGRAPHERS(state, action) {
+    const searchTerm = action.value.toLowerCase();
+    const visible_photo_ids = {};
+    state.photo_data.map((photo) => {
+      const photographer = photo.user.name.toLowerCase();
+      if (photographer.includes(searchTerm)) {
+        visible_photo_ids[photo.id] = true;
+      }
+    });
+    return { ...state, visible_photo_ids };
+  },
+
+  /**
+   * Seaches the full collection of photos for city OR country names
+   * that include the provided search string.
+   */
+  SEARCH_LOCATIONS(state, action) {
+    const searchTerm = action.value.toLowerCase();
+    const visible_photo_ids = {};
+    state.photo_data.map((photo) => {
+      const { city, country } = photo.location;
+      if (city.toLowerCase().includes(searchTerm) || country.toLowerCase().includes(searchTerm)) {
+        visible_photo_ids[photo.id] = true;
+      }
+    });
+    return { ...state, visible_photo_ids };
   }
 };
 
@@ -95,7 +129,7 @@ const useApplicationData = () => {
 
   const initialState = { favourites: {}, selectedPhoto: {}, selectedTopic: '', visible_photo_ids: {}, photo_data: [], topics: [] };
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { FAV_PHOTO_ADDED, FAV_PHOTO_REMOVED, SELECT_PHOTO, SELECT_TOPIC, SET_PHOTO_DATA, SET_VISIBLE_PHOTO_IDS, SET_TOPIC_DATA } = ACTIONS;
+  const { FAV_PHOTO_ADDED, FAV_PHOTO_REMOVED, SELECT_PHOTO, SELECT_TOPIC, SET_PHOTO_DATA, SET_VISIBLE_PHOTO_IDS, SET_TOPIC_DATA, SEARCH_LOCATIONS, SEARCH_PHOTOGRAPHERS } = ACTIONS;
 
   useEffect(() => {
     const photosPromise = axios.get('/api/photos');
@@ -165,13 +199,28 @@ const useApplicationData = () => {
    */
   const closeModal = () => dispatch({ type: SELECT_PHOTO, value: null });
 
+  /**
+   * Because of its involvement with filtering and assigning the app data,
+   * this function (which actually dispatches the search actions) lives here.  
+   * The state objects that are involved in the workings of the search bar live in a separate hook.  
+   */
+  const runSearch = (searchTerm, category) => {
+    if (category === 'location') {
+      dispatch({ type: SEARCH_LOCATIONS, value: searchTerm });
+    }
+    if (category === 'photographer') {
+      dispatch({ type: SEARCH_PHOTOGRAPHERS, value: searchTerm });
+    }
+  };
+
   return {
     state,
     toggleFavourite,
     showFavourites,
     selectPhoto,
     selectTopic,
-    closeModal
+    closeModal,
+    runSearch
   };
 };
 

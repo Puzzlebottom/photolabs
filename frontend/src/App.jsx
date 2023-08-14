@@ -3,8 +3,6 @@ import HomeRoute from 'routes/HomeRoute';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 import useApplicationData from 'hooks/useApplicationData';
 
-import './App.scss';
-
 const App = () => {
   const {
     state: { photo_data, visible_photo_ids, topics, selectedPhoto, selectedTopic, favourites },
@@ -12,7 +10,8 @@ const App = () => {
     selectPhoto,
     selectTopic,
     toggleFavourite,
-    showFavourites
+    showFavourites,
+    runSearch
   } = useApplicationData(); // custom hook keeps things neat and tidy
 
   // determines whether the modal is shown or not
@@ -23,7 +22,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <HomeRoute {...{ photo_data, visible_photo_ids, topics, favourites, selectPhoto, selectTopic, selectedTopic, toggleFavourite, showFavourites }} />
+      <HomeRoute {...{ photo_data, visible_photo_ids, topics, favourites, selectPhoto, selectTopic, selectedTopic, toggleFavourite, showFavourites, runSearch }} />
       {isSelected && <PhotoDetailsModal {...{ selectedPhoto, favourites, selectPhoto, closeModal, toggleFavourite }} />}
     </div>
   );
